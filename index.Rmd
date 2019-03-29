@@ -1,0 +1,72 @@
+--- 
+title: '厦门大学博士学位论文'
+author: "author"
+date: "`r Sys.Date()`"
+cthesisname: '博士学位论文'
+ethesisname: 'Undergraduate Thesis'
+etitle: 'R bookdownplus'
+eauthor: 'dapeng'
+# 学号
+studentid: '31415926'
+# 院系
+school: 'R 语言学院'
+# 专业中文
+cmajor: '论文排版'
+# 专业英文
+emajor: 'Typesetting'
+# 方向
+direction: 'bookdown'
+# 导师中文名
+cmentor: '谷哥教授'
+# 导师英文名
+ementor: 'Prof.Google'
+# 关键词中文
+ckeywords: '排版，文档类'
+# 关键词英文
+ekeywords: '\hologo{LaTeX2e}, \CTeX{}, bookdown'
+# 摘要中文：
+cabstract: 这里写中文摘要。啊不可挡家真的好。
+# 摘要英文：
+eabstract: Abstract in English. R bookdownplus is amazing.
+
+site: bookdown::bookdown_site
+output:
+  bookdown::pdf_book:
+    keep_tex: yes
+    dev: "cairo_pdf"
+    latex_engine: xelatex
+    citation_package: natbib
+    template: tex/template_pku_zh.tex
+    pandoc_args:  --top-level-division=chapter
+    toc_depth: 2
+    toc_unnumbered: yes
+    toc_appendix: yes
+    quote_footer: ["\\begin{flushright}", "\\end{flushright}"]
+documentclass: ctexbook
+bibliography: [config/bib.bib]
+biblio-style: config/annual-review-of-marine-science.csl #apalike
+link-citations: yes
+colorlinks: no
+lot: yes
+lof: yes
+geometry: [a4paper, tmargin=2.5cm, bmargin=2.5cm, lmargin=3.5cm, rmargin=2.5cm]
+description: "This is a thesis."
+---
+
+```{r set-options, echo = FALSE, cache = FALSE}
+options(width = 55) #width来调整向量，矩阵的输出宽度
+```
+```{r setup, include = FALSE}
+library(knitr)  #Latex图表设置中英文双标题
+knit_hooks$set(plot = function(x, options) {
+  if(!is.null(options$bicap)){
+    paste("\\begin{figure}[!htp]",
+        hook_plot_tex(x, options), 
+        "\\bicaption{", options$bicap[1], "}{",options$bicap[2],"}", 
+        "\\end{figure}", sep = "")
+  }
+  else{
+    hook_plot_tex(x, options)
+  }
+})
+```
